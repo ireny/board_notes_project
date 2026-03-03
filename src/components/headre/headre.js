@@ -25,6 +25,13 @@ export function renderHeadre(pathname, isAuthenticated, user = null) {
   const registerActive = pathname === '/register' ? 'active' : '';
   const logoutActive = '';
   const displayName = getDisplayName(user);
+  const dashLink = isAuthenticated
+    ? `
+      <li class="nav-item">
+        <a class="nav-link ${dashActive}" href="/dashboard" data-link>Dashboard</a>
+      </li>
+    `
+    : '';
 
   const authLinks = isAuthenticated
     ? `
@@ -46,6 +53,6 @@ export function renderHeadre(pathname, isAuthenticated, user = null) {
 
   return template
     .replace('__HOME_ACTIVE__', homeActive)
-    .replace('__DASH_ACTIVE__', dashActive)
+    .replace('__DASH_LINK__', dashLink)
     .replace('__AUTH_LINKS__', authLinks);
 }
