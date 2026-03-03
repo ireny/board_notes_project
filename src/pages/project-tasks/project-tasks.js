@@ -165,6 +165,53 @@ function enableTaskDragging(boardEl, projectId, taskStateMap) {
 
   let draggedTask = null;
   let isSaving = false;
+  let pointerX = 0;
+  let pointerY = 0;
+  let activeStageBody = null;
+  let autoScrollRaf = null;
+
+  const stopAutoScroll = () => {
+    if (autoScrollRaf) {
+      cancelAnimationFrame(autoScrollRaf);
+      autoScrollRaf = null;
+    }
+  };
+
+  const runAutoScroll = () => {
+    if (!draggedTask) {
+      stopAutoScroll();
+      return;
+    }
+
+    const boardRect = boardEl.getBoundingClientRect();
+    const boardEdgeThreshold = 52;
+    const boardScrollStep = 14;
+
+    if (pointerX < boardRect.left + boardEdgeThreshold) {
+      boardEl.scrollLeft -= boardScrollStep;
+    } else if (pointerX > boardRect.right - boardEdgeThreshold) {
+      boardEl.scrollLeft += boardScrollStep;
+    }
+
+    if (activeStageBody) {
+      const bodyRect = activeStageBody.getBoundingClientRect();
+      const bodyEdgeThreshold = 44;
+      const bodyScrollStep = 12;
+
+      if (pointerY < bodyRect.top + bodyEdgeThreshold) {
+        activeStageBody.scrollTop -= bodyScrollStep;
+      } else if (pointerY > bodyRect.bottom - bodyEdgeThreshold) {
+        activeStageBody.scrollTop += bodyScrollStep;
+      }
+    }
+
+    autoScrollRaf = requestAnimationFrame(runAutoScroll);
+  };
+
+  const startAutoScroll = () => {
+    if (autoScrollRaf) return;
+    autoScrollRaf = requestAnimationFrame(runAutoScroll);
+  };
 
   const setDraggingEnabled = (enabled) => {
     taskCards.forEach((task) => {
@@ -210,11 +257,14 @@ function enableTaskDragging(boardEl, projectId, taskStateMap) {
       draggedTask = taskCard;
       taskCard.classList.add('is-dragging');
       event.dataTransfer.effectAllowed = 'move';
+      startAutoScroll();
     });
 
     taskCard.addEventListener('dragend', async () => {
       taskCard.classList.remove('is-dragging');
       draggedTask = null;
+      activeStageBody = null;
+      stopAutoScroll();
       syncEmptyPlaceholders(boardEl);
       updateStageCounts(boardEl);
       await saveOrderIfChanged();
@@ -226,6 +276,9 @@ function enableTaskDragging(boardEl, projectId, taskStateMap) {
       if (!draggedTask || isSaving) return;
 
       event.preventDefault();
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      activeStageBody = stageBody;
       stageBody.classList.add('is-drop-target');
 
       const afterElement = getDragAfterElement(stageBody, event.clientY);
