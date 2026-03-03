@@ -24,9 +24,65 @@ async function loadProjects() {
     .select('id, title, description, created_at')
     .order('created_at', { ascending: false });
 
+  const projectIds = (projects ?? []).map((project) => project.id);
+
+  if (projectIds.length === 0) {
+    return {
+      user: sessionData.session.user,
+      projects: []
+    };
+  }
+
+  const [{ data: stagesData, error: stagesError }, { data: tasksData, error: tasksError }] = await Promise.all([
+    supabase.from('project_stages').select('project_id').in('project_id', projectIds),
+    supabase.from('tasks').select('project_id, done').in('project_id', projectIds)
+  ]);
+
+  if (stagesError) {
+    throw stagesError;
+  }
+
+  if (tasksError) {
+    throw tasksError;
+  }
+
+  const statsByProject = new Map();
+
+  projectIds.forEach((id) => {
+    statsByProject.set(id, { stageCount: 0, openTasks: 0, tasksDone: 0 });
+  });
+
+  (stagesData ?? []).forEach((stage) => {
+    const stats = statsByProject.get(stage.project_id);
+    if (stats) {
+      stats.stageCount += 1;
+    }
+  });
+
+  (tasksData ?? []).forEach((task) => {
+    const stats = statsByProject.get(task.project_id);
+    if (!stats) return;
+
+    if (task.done) {
+      stats.tasksDone += 1;
+    } else {
+      stats.openTasks += 1;
+    }
+  });
+
+  const projectsWithStats = (projects ?? []).map((project) => {
+    const stats = statsByProject.get(project.id) ?? { stageCount: 0, openTasks: 0, tasksDone: 0 };
+    return {
+      ...project,
+      stageCount: stats.stageCount,
+      openTasks: stats.openTasks,
+      tasksDone: stats.tasksDone
+    };
+  });
+
   return {
     user: sessionData.session.user,
-    projects: projects ?? []
+    projects: projectsWithStats
   };
 }
 
@@ -61,7 +117,7 @@ function renderProjectsTable(projects) {
   if (projects.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="4" class="text-center py-4 text-secondary">
+        <td colspan="7" class="text-center py-4 text-secondary">
           No projects yet. <a href="/projects/new" data-link>Create your first project</a>
         </td>
       </tr>
@@ -78,6 +134,15 @@ function renderProjectsTable(projects) {
       </td>
       <td class="text-secondary">
         ${project.description ? escapeHtml(project.description) : '—'}
+      </td>
+      <td class="text-center text-secondary">
+        ${project.stageCount ?? 0}
+      </td>
+      <td class="text-center text-secondary">
+        ${project.openTasks ?? 0}
+      </td>
+      <td class="text-center text-secondary">
+        ${project.tasksDone ?? 0}
       </td>
       <td class="text-secondary">
         ${formatDate(project.created_at)}
