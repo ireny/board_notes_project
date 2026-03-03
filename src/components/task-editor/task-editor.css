@@ -1,0 +1,70 @@
+.task-editor__attachments {
+  border-top: 1px solid rgba(var(--bs-primary-rgb), 0.14);
+  padding-top: 0.9rem;
+}
+
+.task-editor__attachments-list {
+  max-height: 14rem;
+  overflow: auto;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.12);
+  border-radius: 0.45rem;
+}
+
+.task-editor__attachment-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+}
+
+.task-editor__attachment-main {
+  display: flex;
+  gap: 0.55rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.task-editor__attachment-preview {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.16);
+  object-fit: cover;
+  background: #f8fafc;
+}
+
+.task-editor__attachment-preview-placeholder {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.4rem;
+  border: 1px dashed rgba(var(--bs-primary-rgb), 0.2);
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  background: #f8fafc;
+}
+
+.task-editor__attachment-text {
+  min-width: 0;
+}
+
+.task-editor__attachment-name {
+  font-size: 0.82rem;
+  color: #0f172a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-editor__attachment-meta {
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.task-editor__attachment-actions {
+  display: flex;
+  gap: 0.35rem;
+}

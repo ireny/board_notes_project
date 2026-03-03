@@ -2,9 +2,10 @@ import './project-tasks.css';
 import template from './project-tasks.html?raw';
 import { Modal } from 'bootstrap';
 import { getSupabaseClient, hasSupabaseCredentials } from '../../lib/supabase-client.js';
+import { mountTaskEditor, renderTaskEditor } from '../../components/task-editor/task-editor.js';
 
 export function renderProjectTasksPage() {
-  return template;
+  return `${template}${renderTaskEditor()}`;
 }
 
 function escapeHtml(text) {
@@ -434,43 +435,6 @@ function renderBoard(stages, tasks) {
     .join('');
 }
 
-async function createTask(projectId, stageId, title, descriptionHtml, done) {
-  const supabase = getSupabaseClient();
-
-  const { data: existingTasks } = await supabase
-    .from('tasks')
-    .select('order_position')
-    .eq('project_id', projectId)
-    .eq('stage_id', stageId)
-    .order('order_position', { ascending: false })
-    .limit(1);
-
-  const maxPos = existingTasks && existingTasks.length > 0 ? (existingTasks[0].order_position ?? 0) : 0;
-
-  const { error } = await supabase.from('tasks').insert({
-    project_id: projectId,
-    stage_id: stageId,
-    title,
-    description_html: descriptionHtml || null,
-    done: done ?? false,
-    order_position: maxPos + 1
-  });
-
-  if (error) throw error;
-}
-
-async function updateTask(taskId, projectId, title, descriptionHtml, done) {
-  const supabase = getSupabaseClient();
-
-  const { error } = await supabase
-    .from('tasks')
-    .update({ title, description_html: descriptionHtml || null, done: done ?? false })
-    .eq('id', taskId)
-    .eq('project_id', projectId);
-
-  if (error) throw error;
-}
-
 async function deleteTask(taskId, projectId) {
   const supabase = getSupabaseClient();
 
@@ -527,30 +491,32 @@ export async function onMountProjectTasksPage(projectId) {
 
   usersLink.setAttribute('href', `/projects/${projectId}/users`);
 
-  // Modal instances
-  const taskFormModalEl = document.querySelector('#taskFormModal');
   const deleteTaskModalEl = document.querySelector('#deleteTaskModal');
 
-  if (!taskFormModalEl || !deleteTaskModalEl) {
+  if (!deleteTaskModalEl) {
     return;
   }
 
-  const taskFormModal = Modal.getOrCreateInstance(taskFormModalEl);
   const deleteTaskModal = Modal.getOrCreateInstance(deleteTaskModalEl);
-
-  // Form elements
-  const taskForm = document.querySelector('#task-form');
-  const taskFormTaskIdInput = document.querySelector('#task-form-task-id');
-  const taskFormStageIdInput = document.querySelector('#task-form-stage-id');
-  const taskFormTitle = document.querySelector('#task-form-title');
-  const taskFormDescription = document.querySelector('#task-form-description');
-  const taskFormDone = document.querySelector('#task-form-done');
-  const taskFormSubmitBtn = document.querySelector('#task-form-submit');
-  const taskFormModalLabel = document.querySelector('#taskFormModalLabel');
 
   const deleteTaskTitleDisplay = document.querySelector('#delete-task-title-display');
   const deleteTaskIdInput = document.querySelector('#delete-task-id');
   const deleteTaskConfirmBtn = document.querySelector('#delete-task-confirm-btn');
+
+  if (!deleteTaskTitleDisplay || !deleteTaskIdInput || !deleteTaskConfirmBtn) {
+    return;
+  }
+
+  const taskEditor = mountTaskEditor({
+    projectId,
+    onSaved: async () => {
+      await refreshBoard(projectId, boardEl, titleEl, descriptionEl, content, authAlert);
+    }
+  });
+
+  if (!taskEditor) {
+    return;
+  }
 
   // Wire up events only once (guard with a flag on the board element)
   if (!boardEl.dataset.crudWired) {
@@ -558,38 +524,6 @@ export async function onMountProjectTasksPage(projectId) {
 
     // Track drag state to avoid opening modal on drop
     let isDragging = false;
-
-    function openCreateModal(stageId) {
-      taskFormTaskIdInput.value = '';
-      taskFormStageIdInput.value = stageId;
-      taskFormTitle.value = '';
-      taskFormDescription.value = '';
-      taskFormDone.checked = false;
-      taskFormModalLabel.textContent = 'New Task';
-      taskFormSubmitBtn.textContent = 'Create Task';
-      taskFormSubmitBtn.disabled = false;
-      taskForm.classList.remove('was-validated');
-      taskFormModal.show();
-    }
-
-    function openEditModal(taskEl) {
-      const taskId = taskEl.getAttribute('data-task-id');
-      const stageId = taskEl.getAttribute('data-stage-id');
-      const rawTitle = taskEl.getAttribute('data-task-title') || '';
-      const rawDesc = taskEl.getAttribute('data-task-desc') || '';
-      const done = taskEl.getAttribute('data-task-done') === '1';
-
-      taskFormTaskIdInput.value = taskId;
-      taskFormStageIdInput.value = stageId;
-      taskFormTitle.value = rawTitle;
-      taskFormDescription.value = stripHtml(rawDesc);
-      taskFormDone.checked = done;
-      taskFormModalLabel.textContent = 'Edit Task';
-      taskFormSubmitBtn.textContent = 'Save Changes';
-      taskFormSubmitBtn.disabled = false;
-      taskForm.classList.remove('was-validated');
-      taskFormModal.show();
-    }
 
     function openDeleteModal(taskId, taskTitle) {
       deleteTaskIdInput.value = taskId;
@@ -612,7 +546,15 @@ export async function onMountProjectTasksPage(projectId) {
       if (editBtn) {
         event.stopPropagation();
         const taskEl = editBtn.closest('.page-project-tasks__task[data-task-id]');
-        if (taskEl) openEditModal(taskEl);
+        if (taskEl) {
+          taskEditor.openEdit({
+            id: taskEl.getAttribute('data-task-id'),
+            stageId: taskEl.getAttribute('data-stage-id'),
+            title: taskEl.getAttribute('data-task-title') || '',
+            description: stripHtml(taskEl.getAttribute('data-task-desc') || ''),
+            done: taskEl.getAttribute('data-task-done') === '1'
+          });
+        }
         return;
       }
 
@@ -626,13 +568,19 @@ export async function onMountProjectTasksPage(projectId) {
 
       if (createBtn) {
         const stageId = createBtn.getAttribute('data-stage-id');
-        openCreateModal(stageId);
+        taskEditor.openCreate(stageId);
         return;
       }
 
       // Clicking the card body (not action buttons) opens edit
       if (taskCard && !editBtn && !deleteBtn) {
-        openEditModal(taskCard);
+        taskEditor.openEdit({
+          id: taskCard.getAttribute('data-task-id'),
+          stageId: taskCard.getAttribute('data-stage-id'),
+          title: taskCard.getAttribute('data-task-title') || '',
+          description: stripHtml(taskCard.getAttribute('data-task-desc') || ''),
+          done: taskCard.getAttribute('data-task-done') === '1'
+        });
       }
     });
 
@@ -641,38 +589,6 @@ export async function onMountProjectTasksPage(projectId) {
     pageSection.addEventListener('dragend', () => {
       // Small delay so click event fired after dragend sees the flag still set
       setTimeout(() => { isDragging = false; }, 150);
-    });
-
-    // Form submit (create or update)
-    taskForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      taskForm.classList.add('was-validated');
-      if (!taskForm.checkValidity()) return;
-
-      const taskId = taskFormTaskIdInput.value.trim();
-      const stageId = taskFormStageIdInput.value.trim();
-      const title = taskFormTitle.value.trim();
-      const description = taskFormDescription.value.trim();
-      const done = taskFormDone.checked;
-
-      taskFormSubmitBtn.disabled = true;
-      taskFormSubmitBtn.textContent = 'Saving…';
-
-      try {
-        if (taskId) {
-          await updateTask(taskId, projectId, title, description, done);
-        } else {
-          await createTask(projectId, stageId, title, description, done);
-        }
-        taskFormModal.hide();
-        await refreshBoard(projectId, boardEl, titleEl, descriptionEl, content, authAlert);
-      } catch (error) {
-        alert(`Failed to save task: ${error.message}`);
-        taskFormSubmitBtn.disabled = false;
-        taskFormSubmitBtn.textContent = taskId ? 'Save Changes' : 'Create Task';
-      }
     });
 
     // Delete confirm
