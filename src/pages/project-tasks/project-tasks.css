@@ -70,6 +70,7 @@
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
   padding: 0.65rem 0.7rem;
   cursor: grab;
+  position: relative;
 }
 
 .page-project-tasks__task:active {
@@ -80,11 +81,78 @@
   opacity: 0.45;
 }
 
+/* Hover action buttons (edit + delete) */
+.page-project-tasks__task-actions {
+  display: none;
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  gap: 0.2rem;
+  z-index: 2;
+}
+
+.page-project-tasks__task:hover .page-project-tasks__task-actions {
+  display: flex;
+}
+
+.page-project-tasks__task-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #64748b;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+
+.page-project-tasks__task-action-btn:hover {
+  background: #e0e7f0;
+  color: #1e40af;
+}
+
+.page-project-tasks__task-action-btn.is-delete:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Ensure task title has right padding so it doesn't overlap action buttons */
 .page-project-tasks__task-title {
   font-size: 0.9rem;
   font-weight: 600;
   margin: 0 0 0.25rem;
   color: #0f172a;
+  padding-right: 3.8rem;
+}
+
+/* Create task button at column bottom */
+.page-project-tasks__create-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  margin-top: 0.4rem;
+  border: 1px dashed rgba(var(--bs-primary-rgb), 0.3);
+  border-radius: 0.65rem;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.17s, border-color 0.17s, color 0.17s;
+}
+
+.page-project-tasks__create-btn:hover {
+  background: rgba(var(--bs-primary-rgb), 0.07);
+  border-color: rgba(var(--bs-primary-rgb), 0.55);
+  color: #1e40af;
 }
 
 .page-project-tasks__task-desc {
