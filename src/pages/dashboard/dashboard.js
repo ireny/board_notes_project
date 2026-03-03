@@ -66,20 +66,24 @@ export async function onMountDashboardPage() {
   }
 
   projectsList.innerHTML = `
-    <ul class="list-group list-group-flush">
+    <div class="row g-3">
       ${data.projects
         .map(
           (project) => `
-        <li class="list-group-item px-0">
-          <a href="/projects/${project.id}" data-link class="text-decoration-none d-block">
-            <h3 class="h6 mb-1">${escapeHtml(project.title)}</h3>
-            ${project.description ? `<p class="mb-0 text-secondary small">${escapeHtml(project.description)}</p>` : ''}
+        <div class="col-12 col-md-6 col-xl-4">
+          <a href="/projects/${project.id}" data-link class="card border-0 shadow-sm text-decoration-none h-100 page-dashboard__project-card">
+            <div class="card-body">
+              <h3 class="h6 mb-2 page-dashboard__project-title">${escapeHtml(project.title)}</h3>
+              <p class="mb-0 text-secondary small page-dashboard__project-description">${
+                project.description ? escapeHtml(project.description) : 'No description yet.'
+              }</p>
+            </div>
           </a>
-        </li>
+        </div>
       `
         )
         .join('')}
-    </ul>
+    </div>
   `;
 }
 

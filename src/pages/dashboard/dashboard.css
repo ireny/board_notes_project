@@ -6,6 +6,19 @@
   border-radius: 0.75rem;
 }
 
-.page-dashboard .list-group-item a:hover h3 {
+.page-dashboard__project-card {
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.page-dashboard__project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12) !important;
+}
+
+.page-dashboard__project-card:hover .page-dashboard__project-title {
   text-decoration: underline;
+}
+
+.page-dashboard__project-description {
+  line-height: 1.45;
 }
