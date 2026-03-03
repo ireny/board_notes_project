@@ -46,6 +46,7 @@ export async function onMountDashboardPage() {
 
   if (!data.user) {
     authAlert.classList.remove('d-none');
+    navigateTo('/login');
     return;
   }
 
