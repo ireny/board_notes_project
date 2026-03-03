@@ -1,3 +1,15 @@
 .app-header .nav-link.active {
   font-weight: 600;
 }
+
+.app-header__user-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.2);
+  background: rgba(var(--bs-primary-rgb), 0.08);
+  color: #0b4db3;
+  font-weight: 600;
+  line-height: 1;
+}

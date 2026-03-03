@@ -38,19 +38,19 @@ export function navigateTo(pathname) {
   renderApp();
 }
 
-async function getIsAuthenticated() {
+async function getCurrentUser() {
   if (!hasSupabaseCredentials()) {
-    return false;
+    return null;
   }
 
   const supabase = getSupabaseClient();
   const { data, error } = await supabase.auth.getUser();
 
   if (error) {
-    return false;
+    return null;
   }
 
-  return Boolean(data.user);
+  return data.user ?? null;
 }
 
 async function renderApp() {
@@ -59,13 +59,16 @@ async function renderApp() {
   const appRoot = document.querySelector('#app');
   const currentPath = window.location.pathname;
   const route = resolveRoute(currentPath);
-  const isAuthenticated = await getIsAuthenticated();
+  const currentUser = await getCurrentUser();
+  const isAuthenticated = Boolean(currentUser);
+  const isHomePage = currentPath === '/';
+  const mainClass = isHomePage ? 'container py-4' : 'container py-4 app-main-shell';
 
   document.title = route.title ?? 'Board Notes';
 
   appRoot.innerHTML = `
-    ${renderHeadre(currentPath, isAuthenticated)}
-    <main class="container py-4" id="page-root"></main>
+    ${renderHeadre(currentPath, isAuthenticated, currentUser)}
+    <main class="${mainClass}" id="page-root"></main>
     ${renderFooter()}
   `;
 

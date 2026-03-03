@@ -1,15 +1,36 @@
 import './headre.css';
 import template from './headre.html?raw';
 
-export function renderHeadre(pathname, isAuthenticated) {
+function getDisplayName(user) {
+  if (!user) return '';
+
+  const fullName = user.user_metadata?.full_name?.trim();
+  if (fullName) return fullName;
+
+  const name = user.user_metadata?.name?.trim();
+  if (name) return name;
+
+  if (user.email) {
+    const [emailPrefix] = user.email.split('@');
+    return emailPrefix || user.email;
+  }
+
+  return 'User';
+}
+
+export function renderHeadre(pathname, isAuthenticated, user = null) {
   const homeActive = pathname === '/' ? 'active' : '';
   const dashActive = pathname === '/dashboard' ? 'active' : '';
   const loginActive = pathname === '/login' ? 'active' : '';
   const registerActive = pathname === '/register' ? 'active' : '';
   const logoutActive = '';
+  const displayName = getDisplayName(user);
 
   const authLinks = isAuthenticated
     ? `
+      <li class="nav-item">
+        <span class="nav-link app-header__user-badge" aria-label="Logged in user">${displayName}</span>
+      </li>
       <li class="nav-item">
         <a class="nav-link ${logoutActive}" href="#" data-logout>Logout</a>
       </li>

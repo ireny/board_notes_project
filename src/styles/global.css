@@ -23,3 +23,30 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+#page-root.app-main-shell {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.18);
+  background: linear-gradient(180deg, rgba(232, 247, 255, 0.9) 0%, rgba(245, 252, 255, 0.86) 100%);
+}
+
+#page-root.app-main-shell .card {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.16) !important;
+  border-radius: 1rem;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.08);
+}
+
+#page-root.app-main-shell .table {
+  --bs-table-bg: transparent;
+}
+
+@media (max-width: 767.98px) {
+  #page-root.app-main-shell {
+    padding: 0.8rem;
+    border-radius: 0.85rem;
+  }
+}
