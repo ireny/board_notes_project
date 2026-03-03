@@ -1,5 +1,57 @@
-<section class="page-dashboard py-5 text-center">
-  <h1 class="display-6 mb-3">Dashboard</h1>
-  <p class="lead text-secondary mb-4">Dashboard page mapped to /dashboard</p>
-  <a class="btn btn-outline-primary" href="/" data-link>Back to Home</a>
+<section class="page-dashboard py-4">
+  <h1 class="h2 mb-4">Dashboard</h1>
+
+  <div class="alert alert-warning d-none" id="dashboard-auth-alert" role="alert">
+    You need to be logged in to view your dashboard.
+    <a href="/login" data-link>Login</a>
+  </div>
+
+  <div id="dashboard-content" class="d-none">
+    <div class="row g-3 mb-4">
+      <div class="col-12 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 text-secondary mb-1">Projects</h2>
+            <p class="h3 mb-0" id="stat-projects">—</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 text-secondary mb-1">Total Tasks</h2>
+            <p class="h3 mb-0" id="stat-tasks-total">—</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 text-secondary mb-1">Pending Tasks</h2>
+            <p class="h3 mb-0" id="stat-tasks-pending">—</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 text-secondary mb-1">Done Tasks</h2>
+            <p class="h3 mb-0" id="stat-tasks-done">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 mb-0">Your Projects</h2>
+          <a href="/projects" data-link class="btn btn-sm btn-outline-primary">View All Projects</a>
+        </div>
+        <div id="projects-list">
+          <p class="text-secondary">Loading projects...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

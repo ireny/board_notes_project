@@ -1,8 +1,22 @@
 import { renderHeadre } from './components/headre/headre.js';
 import { renderFooter } from './components/footer/footer.js';
 import { routes, resolveRoute } from './router/routes.js';
+import { getSupabaseClient, hasSupabaseCredentials } from './lib/supabase-client.js';
 
-function onNavigate(event) {
+async function onNavigate(event) {
+  const logoutLink = event.target.closest('[data-logout]');
+  if (logoutLink) {
+    event.preventDefault();
+
+    if (hasSupabaseCredentials()) {
+      const supabase = getSupabaseClient();
+      await supabase.auth.signOut();
+    }
+
+    navigateTo('/');
+    return;
+  }
+
   const anchor = event.target.closest('[data-link]');
 
   if (!anchor) {
@@ -23,15 +37,31 @@ export function navigateTo(pathname) {
   renderApp();
 }
 
-function renderApp() {
+async function getIsAuthenticated() {
+  if (!hasSupabaseCredentials()) {
+    return false;
+  }
+
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    return false;
+  }
+
+  return Boolean(data.user);
+}
+
+async function renderApp() {
   const appRoot = document.querySelector('#app');
   const currentPath = window.location.pathname;
   const route = resolveRoute(currentPath);
+  const isAuthenticated = await getIsAuthenticated();
 
   document.title = route.title ?? 'Board Notes';
 
   appRoot.innerHTML = `
-    ${renderHeadre(currentPath)}
+    ${renderHeadre(currentPath, isAuthenticated)}
     <main class="container py-4" id="page-root"></main>
     ${renderFooter()}
   `;
@@ -49,7 +79,7 @@ export function createApp(container) {
 
   document.addEventListener('click', onNavigate);
   window.addEventListener('popstate', onPopState);
-  renderApp();
+  void renderApp();
 }
 
 export { routes };

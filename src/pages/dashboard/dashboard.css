@@ -1,3 +1,11 @@
 .page-dashboard {
-  min-height: 40vh;
+  min-height: calc(100vh - 13.5rem);
+}
+
+.page-dashboard .card {
+  border-radius: 0.75rem;
+}
+
+.page-dashboard .list-group-item a:hover h3 {
+  text-decoration: underline;
 }

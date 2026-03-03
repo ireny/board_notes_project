@@ -1,0 +1,36 @@
+<section class="page-project-form py-4">
+  <div class="mb-4">
+    <a href="/projects" data-link class="btn btn-sm btn-outline-secondary">&larr; Back to Projects</a>
+  </div>
+
+  <div class="alert alert-warning d-none" id="form-auth-alert" role="alert">
+    You need to be logged in.
+    <a href="/login" data-link>Login</a>
+  </div>
+
+  <div id="form-content" class="d-none">
+    <div class="card border-0 shadow-sm" style="max-width: 48rem;">
+      <div class="card-body p-4 p-md-5">
+        <h1 class="h2 mb-4" id="form-heading">Create Project</h1>
+
+        <form id="project-form" novalidate>
+          <div class="mb-3">
+            <label for="project-title" class="form-label">Project Title</label>
+            <input id="project-title" name="title" class="form-control" type="text" required />
+          </div>
+          <div class="mb-4">
+            <label for="project-description" class="form-label">Description</label>
+            <textarea id="project-description" name="description" class="form-control" rows="4"></textarea>
+          </div>
+
+          <div class="alert d-none" id="form-feedback" role="alert"></div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary" id="form-submit">Create Project</button>
+            <a href="/projects" data-link class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

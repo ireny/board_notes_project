@@ -1,14 +1,20 @@
 import { renderIndexPage } from '../pages/index/index.js';
-import { renderDashboardPage } from '../pages/dashboard/dashboard.js';
+import { onMountDashboardPage, renderDashboardPage } from '../pages/dashboard/dashboard.js';
 import { onMountLoginPage, renderLoginPage } from '../pages/login/login.js';
 import { onMountRegisterPage, renderRegisterPage } from '../pages/register/register.js';
+import {
+  onMountProjectDetailPage,
+  renderProjectDetailPage
+} from '../pages/project-detail/project-detail.js';
+import { onMountProjectsPage, renderProjectsPage } from '../pages/projects/projects.js';
+import { onMountProjectFormPage, renderProjectFormPage } from '../pages/project-form/project-form.js';
 
 const notFoundRoute = {
   path: '*',
-  title: 'Not Found | Board Notes',
+  title: '404 Not Found | Board Notes',
   render: () => `
     <section class="text-center py-5">
-      <h1 class="h3 mb-3">Page not found</h1>
+      <h1 class="h3 mb-3">404 Not Found</h1>
       <a class="btn btn-primary" href="/" data-link>Go to Home</a>
     </section>
   `,
@@ -26,7 +32,7 @@ export const routes = [
     path: '/dashboard',
     title: 'Dashboard',
     render: renderDashboardPage,
-    onMount: undefined
+    onMount: onMountDashboardPage
   },
   {
     path: '/login',
@@ -39,9 +45,54 @@ export const routes = [
     title: 'Register | Board Notes',
     render: renderRegisterPage,
     onMount: onMountRegisterPage
+  },
+  {
+    path: '/projects',
+    title: 'Projects | Board Notes',
+    render: renderProjectsPage,
+    onMount: onMountProjectsPage
   }
 ];
 
 export function resolveRoute(pathname) {
-  return routes.find((route) => route.path === pathname) ?? notFoundRoute;
+  const exactRoute = routes.find((route) => route.path === pathname);
+  if (exactRoute) {
+    return exactRoute;
+  }
+
+  // /projects/new
+  if (pathname === '/projects/new') {
+    return {
+      path: pathname,
+      title: 'Create Project | Board Notes',
+      render: renderProjectFormPage,
+      onMount: () => onMountProjectFormPage('create')
+    };
+  }
+
+  // /projects/{id}/edit
+  const editMatch = pathname.match(/^\/projects\/([a-f0-9-]+)\/edit$/);
+  if (editMatch) {
+    const projectId = editMatch[1];
+    return {
+      path: pathname,
+      title: 'Edit Project | Board Notes',
+      render: renderProjectFormPage,
+      onMount: () => onMountProjectFormPage('edit', projectId)
+    };
+  }
+
+  // /projects/{id}
+  const projectMatch = pathname.match(/^\/projects\/([a-f0-9-]+)$/);
+  if (projectMatch) {
+    const projectId = projectMatch[1];
+    return {
+      path: pathname,
+      title: 'Project | Board Notes',
+      render: renderProjectDetailPage,
+      onMount: () => onMountProjectDetailPage(projectId)
+    };
+  }
+
+  return notFoundRoute;
 }
