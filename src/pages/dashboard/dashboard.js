@@ -71,7 +71,7 @@ export async function onMountDashboardPage() {
         .map(
           (project) => `
         <div class="col-12 col-md-6 col-xl-4">
-          <a href="/projects/${project.id}" data-link class="card border-0 shadow-sm text-decoration-none h-100 page-dashboard__project-card">
+          <a href="/project/${project.id}/tasks" data-link class="card border-0 shadow-sm text-decoration-none h-100 page-dashboard__project-card">
             <div class="card-body">
               <h3 class="h6 mb-2 page-dashboard__project-title">${escapeHtml(project.title)}</h3>
               <p class="mb-0 text-secondary small page-dashboard__project-description">${

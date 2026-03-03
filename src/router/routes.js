@@ -6,6 +6,7 @@ import {
   onMountProjectDetailPage,
   renderProjectDetailPage
 } from '../pages/project-detail/project-detail.js';
+import { onMountProjectTasksPage, renderProjectTasksPage } from '../pages/project-tasks/project-tasks.js';
 import { onMountProjectsPage, renderProjectsPage } from '../pages/projects/projects.js';
 import { onMountProjectFormPage, renderProjectFormPage } from '../pages/project-form/project-form.js';
 
@@ -91,6 +92,18 @@ export function resolveRoute(pathname) {
       title: 'Project | Board Notes',
       render: renderProjectDetailPage,
       onMount: () => onMountProjectDetailPage(projectId)
+    };
+  }
+
+  // /project/{id}/tasks
+  const projectTasksMatch = pathname.match(/^\/project\/([a-f0-9-]+)\/tasks$/);
+  if (projectTasksMatch) {
+    const projectId = projectTasksMatch[1];
+    return {
+      path: pathname,
+      title: 'Tasks | Board Notes',
+      render: renderProjectTasksPage,
+      onMount: () => onMountProjectTasksPage(projectId)
     };
   }
 

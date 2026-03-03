@@ -1,0 +1,22 @@
+<section class="page-project-tasks py-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <a href="/projects" data-link class="btn btn-sm btn-outline-secondary">&larr; Back to Projects</a>
+    <a href="/dashboard" data-link class="btn btn-sm btn-outline-primary">Dashboard</a>
+  </div>
+
+  <div class="alert alert-warning d-none" id="project-tasks-auth-alert" role="alert">
+    You need to be logged in to view tasks.
+    <a href="/login" data-link>Login</a>
+  </div>
+
+  <div id="project-tasks-content" class="d-none">
+    <h1 class="h2 mb-1" id="project-tasks-title">Project Tasks</h1>
+    <p class="text-secondary mb-3" id="project-tasks-description"></p>
+
+    <div class="page-project-tasks__board-shell">
+      <div class="page-project-tasks__board" id="project-tasks-board">
+        <div class="text-secondary">Loading project tasks...</div>
+      </div>
+    </div>
+  </div>
+</section>
