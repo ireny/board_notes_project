@@ -1,4 +1,4 @@
-import { renderIndexPage } from '../pages/index/index.js';
+import { onMountIndexPage, renderIndexPage } from '../pages/index/index.js';
 import { onMountDashboardPage, renderDashboardPage } from '../pages/dashboard/dashboard.js';
 import { onMountLoginPage, renderLoginPage } from '../pages/login/login.js';
 import { onMountRegisterPage, renderRegisterPage } from '../pages/register/register.js';
@@ -26,7 +26,7 @@ export const routes = [
     path: '/',
     title: 'Home',
     render: renderIndexPage,
-    onMount: undefined
+    onMount: onMountIndexPage
   },
   {
     path: '/dashboard',

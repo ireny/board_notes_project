@@ -1,3 +1,13 @@
+:root {
+  --bs-primary: #0b63f6;
+  --bs-primary-rgb: 11, 99, 246;
+  --bs-success: #16a34a;
+  --bs-success-rgb: 22, 163, 74;
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #0f172a;
+  --bs-tertiary-bg: #eef6ff;
+}
+
 html,
 body {
   height: 100%;
@@ -5,6 +15,7 @@ body {
 
 body {
   min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #f5fbff 60%, #effcf5 100%);
 }
 
 #app {

@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
-    "bootstrap": "^5.3.7"
+    "bootstrap": "^5.3.7",
+    "three": "^0.183.2"
   },
   "devDependencies": {
     "vite": "^7.1.5"

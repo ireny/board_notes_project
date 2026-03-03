@@ -1,85 +1,92 @@
 <section class="page-index py-4 py-md-5">
-  <div class="page-index__hero card border-0 shadow-sm mb-4 mb-md-5">
-    <div class="card-body p-4 p-md-5">
-      <span class="badge rounded-pill text-bg-secondary-subtle text-secondary-emphasis mb-3">BOARD NOTES</span>
-      <h1 class="display-5 fw-bold mb-3">Plan life, not just tasks.</h1>
-      <p class="text-secondary mb-4 page-index__hero-copy page-index__body-text">
-        Board Notes is your personal planning space designed for real life. Organize trips, shopping lists, daily
-        responsibilities, kids’ activities, and family plans — all in one clear, visual board.
-      </p>
-      <p class="text-secondary mb-4 page-index__hero-copy page-index__body-text">
-        Create boards for every area of your life. Break plans into stages. Move tasks forward as they happen. From “Idea” to
-        “Done”, everything stays visible and under control.
-      </p>
-      <div class="d-flex flex-row flex-wrap align-items-center gap-2 gap-md-3">
-        <p class="mb-0 text-secondary page-index__cta-note">Please register / login to get started.</p>
-        <div class="d-flex flex-column flex-sm-row gap-2">
-          <a class="btn btn-primary btn-lg px-5" href="/register" data-link>Register</a>
-          <a class="btn btn-outline-primary btn-lg px-5" href="/login" data-link>Login</a>
+  <div class="page-index__hero position-relative overflow-hidden">
+    <div class="page-index__three-wrap" aria-hidden="true">
+      <div id="home-three-canvas" class="page-index__three-canvas"></div>
+      <div class="page-index__overlay"></div>
+    </div>
+
+    <div class="page-index__content container-fluid p-3 p-md-4 p-xl-5">
+      <div class="row g-3 g-lg-4 align-items-start page-index__top-layout mb-2 mb-md-3">
+        <div class="col-12 col-lg-5">
+          <article class="page-index__note page-index__note--main page-index__intro h-100 mb-0">
+            <h1 class="display-5 fw-bold mb-1">BOARD NOTES</h1>
+            <p class="h3 mb-2">Plan life, not just tasks.</p>
+            <p class="mb-2">
+              Board Notes is your personal planning space designed for real life. Organize trips, shopping lists, daily
+              responsibilities, kids’ activities, and family plans — all in one clear, visual board.
+            </p>
+            <p class="mb-2">
+              Create boards for every area of your life. Break plans into stages. Move tasks forward as they happen. From
+              “Idea” to “Done”, everything stays visible and under control.
+            </p>
+            <p class="h4 mb-0">Simple. Personal. Yours.</p>
+          </article>
+        </div>
+
+        <div class="col-12 col-lg-7">
+          <div id="carouselExample" class="carousel slide page-index__note page-index__note--main page-index__carousel" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/images/pic1.jpg" class="page-index__carousel-image" alt="Board Notes carousel slide 1" onerror="this.onerror=null;this.src='/images/pic1.svg';">
+              </div>
+              <div class="carousel-item">
+                <img src="/images/pic2.jpg" class="page-index__carousel-image" alt="Board Notes carousel slide 2" onerror="this.onerror=null;this.src='/images/pic2.svg';">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
       </div>
-      <p class="h4 mt-4 mb-0">Simple. Personal. Yours.</p>
-    </div>
-  </div>
 
-  <div class="row g-3 page-index__features">
-    <div class="col-12 col-md-4">
-      <article class="card border-0 shadow-sm h-100">
-        <div class="card-body p-4">
-          <h2 class="h4 mb-2">Your life, beautifully organized</h2>
-          <p class="text-secondary mb-0">
-            Because you carry so much — plans, dreams, responsibilities. Keep everything in one calm, clear space.
-          </p>
+      <div class="row g-3 mt-1 page-index__notes-grid">
+        <div class="col-12 col-md-6 col-xl-4">
+          <article class="page-index__note">
+            <h2>Your life, beautifully organized</h2>
+            <p class="mb-0">Because you carry so much — plans, dreams, responsibilities. Keep everything in one calm, clear space.</p>
+          </article>
         </div>
-      </article>
-    </div>
-    <div class="col-12 col-md-4">
-      <article class="card border-0 shadow-sm h-100">
-        <div class="card-body p-4">
-          <h2 class="h4 mb-2">Plan your trips with excitement, not stress</h2>
-          <p class="text-secondary mb-0">
-            From destination ideas to packing lists and daily schedules — enjoy the journey before it even begins.
-          </p>
+        <div class="col-12 col-md-6 col-xl-4">
+          <article class="page-index__note">
+            <h2>Plan your trips with excitement, not stress</h2>
+            <p class="mb-0">From destination ideas to packing lists and daily schedules — enjoy the journey before it even begins.</p>
+          </article>
         </div>
-      </article>
-    </div>
-    <div class="col-12 col-md-4">
-      <article class="card border-0 shadow-sm h-100">
-        <div class="card-body p-4">
-          <h2 class="h4 mb-2">Smarter shopping, less mental load</h2>
-          <p class="text-secondary mb-0">
-            Weekly groceries, special dinners, gifts for loved ones — nothing forgotten, nothing last minute.
-          </p>
+        <div class="col-12 col-md-6 col-xl-4">
+          <article class="page-index__note">
+            <h2>Smarter shopping, less mental load</h2>
+            <p class="mb-0">Weekly groceries, special dinners, gifts for loved ones — nothing forgotten, nothing last minute.</p>
+          </article>
         </div>
-      </article>
-    </div>
-    <div class="col-12 col-md-4">
-      <article class="card border-0 shadow-sm h-100">
-        <div class="card-body p-4">
-          <h2 class="h4 mb-2">Family life, gently coordinated</h2>
-          <p class="text-secondary mb-0">
-            Kids’ activities, school tasks, appointments, shared responsibilities — all visible, all under control.
-          </p>
+        <div class="col-12 col-md-6 col-xl-4">
+          <article class="page-index__note">
+            <h2>Family life, gently coordinated</h2>
+            <p class="mb-0">Kids’ activities, school tasks, appointments, shared responsibilities — all visible, all under control.</p>
+          </article>
         </div>
-      </article>
-    </div>
-    <div class="col-12 col-md-4">
-      <article class="card border-0 shadow-sm h-100">
-        <div class="card-body p-4">
-          <h2 class="h4 mb-2">Your daily rhythm, simplified</h2>
-          <p class="text-secondary mb-0">
-            Move tasks forward as your day unfolds. Small wins. Clear progress. Real satisfaction.
-          </p>
+        <div class="col-12 col-md-6 col-xl-4">
+          <article class="page-index__note">
+            <h2>Your daily rhythm, simplified</h2>
+            <p class="mb-0">Move tasks forward as your day unfolds. Small wins. Clear progress. Real satisfaction.</p>
+          </article>
         </div>
-      </article>
-    </div>
-    <div class="col-12 col-md-4">
-      <article class="card border-0 shadow-sm h-100">
-        <div class="card-body p-4">
-          <h2 class="h4 mb-2">A space that works the way you do</h2>
-          <p class="text-secondary mb-0">Flexible stages. Visual clarity. Drag, drop, breathe.</p>
+        <div class="col-12 col-md-6 col-xl-4">
+          <article class="page-index__note">
+            <h2>A space that works the way you do</h2>
+            <p class="mb-0">Flexible stages. Visual clarity. Drag, drop, breathe.</p>
+          </article>
         </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>

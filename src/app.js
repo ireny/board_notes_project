@@ -2,6 +2,7 @@ import { renderHeadre } from './components/headre/headre.js';
 import { renderFooter } from './components/footer/footer.js';
 import { routes, resolveRoute } from './router/routes.js';
 import { getSupabaseClient, hasSupabaseCredentials } from './lib/supabase-client.js';
+import { onUnmountIndexPage } from './pages/index/index.js';
 
 async function onNavigate(event) {
   const logoutLink = event.target.closest('[data-logout]');
@@ -53,6 +54,8 @@ async function getIsAuthenticated() {
 }
 
 async function renderApp() {
+  onUnmountIndexPage();
+
   const appRoot = document.querySelector('#app');
   const currentPath = window.location.pathname;
   const route = resolveRoute(currentPath);
