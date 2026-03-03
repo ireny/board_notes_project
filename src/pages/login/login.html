@@ -1,0 +1,32 @@
+<section class="page-auth py-4 py-md-5">
+  <div class="card border-0 shadow-sm page-auth__card mx-auto">
+    <div class="card-body p-4 p-md-5">
+      <h1 class="h2 mb-2">Welcome back</h1>
+      <p class="text-secondary mb-4">Login to continue to your taskboards.</p>
+
+      <div class="alert alert-warning d-none" id="login-config-alert" role="alert">
+        Supabase is not configured. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to your environment.
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="mb-3">
+          <label for="login-email" class="form-label">Email</label>
+          <input id="login-email" name="email" class="form-control" type="email" autocomplete="email" required />
+        </div>
+        <div class="mb-3">
+          <label for="login-password" class="form-label">Password</label>
+          <input id="login-password" name="password" class="form-control" type="password" autocomplete="current-password" required />
+        </div>
+
+        <div class="alert d-none" id="login-feedback" role="alert"></div>
+
+        <button type="submit" class="btn btn-primary w-100" id="login-submit">Login</button>
+      </form>
+
+      <p class="mb-0 mt-3 text-secondary text-center">
+        New here?
+        <a href="/register" data-link>Create account</a>
+      </p>
+    </div>
+  </div>
+</section>

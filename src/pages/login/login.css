@@ -1,0 +1,7 @@
+.page-auth {
+  min-height: calc(100vh - 13.5rem);
+}
+
+.page-auth__card {
+  max-width: 34rem;
+}

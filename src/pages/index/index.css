@@ -1,3 +1,22 @@
 .page-index {
-  min-height: 40vh;
+  min-height: 100%;
+}
+
+.page-index__hero {
+  background: var(--bs-tertiary-bg);
+  border-radius: 1rem;
+}
+
+.page-index__hero-copy {
+  max-width: 72rem;
+}
+
+.page-index__body-text,
+.page-index__cta-note,
+.page-index__features p {
+  font-size: 1.2rem;
+}
+
+.page-index__features h2 {
+  font-weight: 600;
 }

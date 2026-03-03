@@ -11,11 +11,15 @@ function onNavigate(event) {
 
   event.preventDefault();
   const href = anchor.getAttribute('href');
-  window.history.pushState({}, '', href);
-  renderApp();
+  navigateTo(href);
 }
 
 function onPopState() {
+  renderApp();
+}
+
+export function navigateTo(pathname) {
+  window.history.pushState({}, '', pathname);
   renderApp();
 }
 

@@ -1,5 +1,7 @@
 import { renderIndexPage } from '../pages/index/index.js';
 import { renderDashboardPage } from '../pages/dashboard/dashboard.js';
+import { onMountLoginPage, renderLoginPage } from '../pages/login/login.js';
+import { onMountRegisterPage, renderRegisterPage } from '../pages/register/register.js';
 
 const notFoundRoute = {
   path: '*',
@@ -25,6 +27,18 @@ export const routes = [
     title: 'Dashboard',
     render: renderDashboardPage,
     onMount: undefined
+  },
+  {
+    path: '/login',
+    title: 'Login | Board Notes',
+    render: renderLoginPage,
+    onMount: onMountLoginPage
+  },
+  {
+    path: '/register',
+    title: 'Register | Board Notes',
+    render: renderRegisterPage,
+    onMount: onMountRegisterPage
   }
 ];
 

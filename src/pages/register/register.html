@@ -1,0 +1,41 @@
+<section class="page-auth py-4 py-md-5">
+  <div class="card border-0 shadow-sm page-auth__card mx-auto">
+    <div class="card-body p-4 p-md-5">
+      <h1 class="h2 mb-2">Create account</h1>
+      <p class="text-secondary mb-4">Register to access your taskboards.</p>
+
+      <div class="alert alert-warning d-none" id="register-config-alert" role="alert">
+        Supabase is not configured. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to your environment.
+      </div>
+
+      <form id="register-form" novalidate>
+        <div class="mb-3">
+          <label for="register-display-name" class="form-label">Display name</label>
+          <input id="register-display-name" name="displayName" class="form-control" type="text" autocomplete="name" placeholder="Your name" />
+        </div>
+        <div class="mb-3">
+          <label for="register-email" class="form-label">Email</label>
+          <input id="register-email" name="email" class="form-control" type="email" autocomplete="email" required />
+        </div>
+        <div class="mb-3">
+          <label for="register-password" class="form-label">Password</label>
+          <input id="register-password" name="password" class="form-control" type="password" autocomplete="new-password" minlength="6" required />
+          <div class="form-text">Use at least 6 characters.</div>
+        </div>
+        <div class="mb-3">
+          <label for="register-confirm-password" class="form-label">Confirm password</label>
+          <input id="register-confirm-password" name="confirmPassword" class="form-control" type="password" autocomplete="new-password" minlength="6" required />
+        </div>
+
+        <div class="alert d-none" id="register-feedback" role="alert"></div>
+
+        <button type="submit" class="btn btn-primary w-100" id="register-submit">Register</button>
+      </form>
+
+      <p class="mb-0 mt-3 text-secondary text-center">
+        Already have an account?
+        <a href="/login" data-link>Login</a>
+      </p>
+    </div>
+  </div>
+</section>
