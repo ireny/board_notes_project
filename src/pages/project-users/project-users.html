@@ -1,0 +1,125 @@
+<section class="page-project-users py-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <a href="/dashboard" data-link class="btn btn-sm btn-outline-secondary">&larr; Back to Dashboard</a>
+    <button type="button" class="btn btn-primary btn-sm d-none" id="project-users-add-btn">+ Add User</button>
+  </div>
+
+  <div class="alert alert-warning d-none" id="project-users-auth-alert" role="alert">
+    You need to be logged in to manage project members.
+    <a href="/login" data-link>Login</a>
+  </div>
+
+  <div class="alert alert-danger d-none" id="project-users-owner-alert" role="alert">
+    Only project owners can manage project members.
+  </div>
+
+  <div id="project-users-content" class="d-none">
+    <h1 class="h2 mb-1" id="project-users-title">Project Members</h1>
+    <p class="text-secondary mb-3" id="project-users-description"></p>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0" id="project-users-table">
+            <thead class="table-light">
+              <tr>
+                <th scope="col" class="ps-4">User Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Date Added</th>
+                <th scope="col" class="text-end pe-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="project-users-table-body">
+              <tr>
+                <td colspan="4" class="text-center py-4 text-secondary">Loading members...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addProjectUserModal" tabindex="-1" aria-labelledby="addProjectUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addProjectUserModalLabel">Add User to Project</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="add-project-user-form">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="project-user-search" class="form-label">Search users</label>
+              <input id="project-user-search" class="form-control" type="search" placeholder="Search by email" />
+            </div>
+            <div class="mb-3">
+              <label for="project-user-select" class="form-label">User</label>
+              <select id="project-user-select" class="form-select" required>
+                <option value="">Select user...</option>
+              </select>
+            </div>
+            <div class="mb-0">
+              <label for="project-user-role" class="form-label">Role</label>
+              <select id="project-user-role" class="form-select" required>
+                <option value="member">Member</option>
+                <option value="editor">Editor</option>
+                <option value="viewer">Viewer</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="add-project-user-submit">Add User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editProjectUserModal" tabindex="-1" aria-labelledby="editProjectUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProjectUserModalLabel">Modify Member Role</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="edit-project-user-form">
+          <div class="modal-body">
+            <p class="mb-2">User: <strong id="edit-project-user-email"></strong></p>
+            <div class="mb-0">
+              <label for="edit-project-user-role" class="form-label">Role</label>
+              <select id="edit-project-user-role" class="form-select" required>
+                <option value="member">Member</option>
+                <option value="editor">Editor</option>
+                <option value="viewer">Viewer</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="edit-project-user-submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="removeProjectUserModal" tabindex="-1" aria-labelledby="removeProjectUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removeProjectUserModalLabel">Remove Project Member</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">Are you sure you want to remove <strong id="remove-project-user-email"></strong> from this project?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="remove-project-user-submit">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

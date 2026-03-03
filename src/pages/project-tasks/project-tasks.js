@@ -402,10 +402,13 @@ export async function onMountProjectTasksPage(projectId) {
   const titleEl = document.querySelector('#project-tasks-title');
   const descriptionEl = document.querySelector('#project-tasks-description');
   const boardEl = document.querySelector('#project-tasks-board');
+  const usersLink = document.querySelector('#project-tasks-users-link');
 
-  if (!authAlert || !content || !titleEl || !descriptionEl || !boardEl) {
+  if (!authAlert || !content || !titleEl || !descriptionEl || !boardEl || !usersLink) {
     return;
   }
+
+  usersLink.setAttribute('href', `/projects/${projectId}/users`);
 
   try {
     const data = await loadProjectTasksData(projectId);

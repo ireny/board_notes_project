@@ -1,0 +1,31 @@
+.page-project-users {
+  min-height: calc(100vh - 13.5rem);
+}
+
+.page-project-users .table td,
+.page-project-users .table th {
+  vertical-align: middle;
+}
+
+.page-project-users__action {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  transition: background-color 0.15s ease-in-out;
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.page-project-users__action:hover {
+  background-color: var(--bs-tertiary-bg);
+}
+
+.page-project-users__action--remove:hover {
+  background-color: var(--bs-danger-bg-subtle);
+  color: var(--bs-danger-text-emphasis);
+}

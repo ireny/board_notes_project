@@ -7,6 +7,7 @@ import {
   renderProjectDetailPage
 } from '../pages/project-detail/project-detail.js';
 import { onMountProjectTasksPage, renderProjectTasksPage } from '../pages/project-tasks/project-tasks.js';
+import { onMountProjectUsersPage, renderProjectUsersPage } from '../pages/project-users/project-users.js';
 import { onMountProjectsPage, renderProjectsPage } from '../pages/projects/projects.js';
 import { onMountProjectFormPage, renderProjectFormPage } from '../pages/project-form/project-form.js';
 
@@ -80,6 +81,18 @@ export function resolveRoute(pathname) {
       title: 'Edit Project | Board Notes',
       render: renderProjectFormPage,
       onMount: () => onMountProjectFormPage('edit', projectId)
+    };
+  }
+
+  // /projects/{id}/users
+  const usersMatch = pathname.match(/^\/projects\/([a-f0-9-]+)\/users$/);
+  if (usersMatch) {
+    const projectId = usersMatch[1];
+    return {
+      path: pathname,
+      title: 'Project Users | Board Notes',
+      render: renderProjectUsersPage,
+      onMount: () => onMountProjectUsersPage(projectId)
     };
   }
 
