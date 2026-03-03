@@ -72,8 +72,8 @@ erDiagram
   }
 
   project_members {
-    uuid project_id PK, FK
-    uuid user_id PK, FK
+    uuid project_id PK
+    uuid user_id PK
     text role
     timestamptz created_at
   }
@@ -106,7 +106,7 @@ erDiagram
     text file_name
     text mime_type
     bigint file_size
-    text bucket_path UNIQUE
+    text bucket_path
     timestamptz created_at
   }
 ```
@@ -178,7 +178,7 @@ Run SQL migrations from `supabase/migrations/` in your Supabase project (SQL Edi
 - `index.html` – app HTML shell
 - `package.json` – scripts and dependencies
 - `vite.config.js` – Vite configuration
-- `readmy.md` – this documentation
+- `readme.md` – this documentation
 
 ### Source (`src/`)
 - `main.js` – app bootstrap entry
